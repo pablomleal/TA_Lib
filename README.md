@@ -27,3 +27,7 @@ Lo mismo pasa con el objetivo temporal. En PHM la operación se cerró en pocas 
 Investigaremos las tasas de forex.
 
 ¿Subirá el stock de LLY? No lo sé, parece que sí hay pulsión de compra y hay una tendencia ascendente.
+
+### De MKC (McCormick).
+
+Es necesario poner las gráficas centradas a 0, porque si no da la sensación de que son todas maravillosas.

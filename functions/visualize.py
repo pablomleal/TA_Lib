@@ -27,6 +27,8 @@ def plot_all(rawdata, EMA_df, filteredCompanies, limit=10):
         plt.plot(x_axis, EMA_df['Quick'][x], 'r')
         plt.plot(x_axis, EMA_df['Slow'][x], 'b')
         plt.plot(x_axis, rawdata[x], 'g')
+        maxlim = max(rawdata[x])
+        plt.ylim([0.33*maxlim, 1.25*maxlim])
         plt.show()
 
 
