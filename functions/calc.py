@@ -13,7 +13,7 @@ def get_EMA_df(qema_period, sema_period, rawdata):
     for x in rawdata.columns:
         df_dict['Quick'][x] = talib.EMA(real2double(rawdata[x].values), timeperiod=qema_period)
         df_dict['Slow'][x] = talib.EMA(real2double(rawdata[x].values), timeperiod=sema_period)
-        df_dict['Ratio'][x] = 100*(df_dict['Quick'][x] - df_dict['Slow'][x])/df_dict['Quick'][x]
+        df_dict['Ratio'][x] = (df_dict['Quick'][x] - df_dict['Slow'][x])/df_dict['Quick'][x]
     
     print ("EMA Dataframe calculated.")
 
@@ -44,7 +44,7 @@ def get_intersection_point(EMA_df, rawdata):
         #Get both values by the intersection and current, and associated growth
         value_intersection_dict[company] = round(rawdata[company].iloc[-(turning_change_index+1)],2)
         value_now_dict[company] = round(rawdata[company].iloc[-1],2)
-        growth_dict[company] = round(100*(value_now_dict[company] - value_intersection_dict[company])/value_intersection_dict[company],2)
+        growth_dict[company] = round((value_now_dict[company] - value_intersection_dict[company])/value_intersection_dict[company],5)
 
     intersection_points_df = pd.DataFrame([idx_intersection_dict, value_intersection_dict, value_now_dict, growth_dict],
         index = ["Turning point", "Turning value", "Value now", "Percent Growth"]).transpose()#.sort_values(by="Percent Growth", ascending=False)
@@ -66,10 +66,10 @@ def ratioWrapper(EMA_df, companies, keyStats):
     for company in companies:
         
         getFrom = int(keyStats['Turning point'].loc[company])
-        avgRatio = round(EMA_df['Ratio'][company][-getFrom:].mean(),2) * (getFrom > 0 ) 
+        avgRatio = round(EMA_df['Ratio'][company][-getFrom:].mean(),5) * (getFrom > 0 ) 
         avgRatio_list.append(avgRatio)
 
-        MinAbsRatio = round(EMA_df['Ratio'][company][-getFrom+2:].min(),2) * (getFrom > 0 ) 
+        MinAbsRatio = round(EMA_df['Ratio'][company][-getFrom+2:].min(),5) * (getFrom > 0 ) 
         minAbs_list.append(MinAbsRatio)
 
     print ("Absolute and Relative Mins calculated.")
@@ -88,7 +88,7 @@ def get_stocks_growing_now(rawdata, keyStats, recent_success_period):
 
         #Get the final ratio and append to list.
         #Ratio 1 means that for 25% of timeframe, 25% of stock range is achieved.
-        contribution_ratio = round(contribution_recent/proportion_recent,2)
+        contribution_ratio = round(contribution_recent/proportion_recent,5)
         contribution_list.append(contribution_ratio)
 
         #print(f"For {x} in the past {recent_success_period} periods the range was {range_local} over {range_global}, hence contribution ratio is {contribution_ratio}")
