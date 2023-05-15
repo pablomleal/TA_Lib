@@ -19,7 +19,7 @@ def filter_companies(keyStats, filterSet=False):
     return (result) 
 
 def plot_all(rawdata, EMA_df, filteredCompanies, limit=10):
-    print (f"Displaying {limit} first companies")
+    print (f"Displaying {min(limit, filteredCompanies.shape[0])} first companies")
     x_axis = rawdata.index
 
     for x in (filteredCompanies[0:limit]['Symbol']):
