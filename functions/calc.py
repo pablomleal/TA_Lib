@@ -19,6 +19,12 @@ def get_EMA_df(qema_period, sema_period, rawdata):
 
     return(pd.concat([df_dict['Quick'], df_dict['Slow'], df_dict['Ratio']], axis=1, keys=['Quick', 'Slow', 'Ratio']))
 
+def get_OBV_df(volumes, closes):
+    df_dict= dict()
+    for x in volumes.columns:
+        df_dict[x] = talib.OBV(real2double(closes[x].values), real2double(volumes[x].values))
+
+    return(pd.DataFrame(df_dict, index = volumes.index))
 
 def get_intersection_point(EMA_df, rawdata):
     '''Returns a df containing:
@@ -99,4 +105,5 @@ def get_stocks_growing_now(rawdata, keyStats, recent_success_period):
 
 def real2double(real_data):
     return(np.array(real_data,dtype='f8'))
-    
+
+
