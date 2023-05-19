@@ -15,8 +15,8 @@ def get_timestamps(daysSince):
     return (ts_today, ts_origin)
 
 def get_downloaded_data(tickers_df, numberOfStocks = 10, daysSince=14):
-    
-    print(f"Requested days: {daysSince}.\nRequested stocks: {numberOfStocks}.")
+    print("Initiating download...")
+    print(f"--> Requested days: {daysSince}.\n--> Requested stocks: {numberOfStocks}.")
     tickers_string = ' '.join(tickers_df.index.values)
     (ts_today, ts_origin) = get_timestamps(daysSince)
     downloadedData = yf.download(tickers_string, start=ts_origin, end=ts_today).fillna(0)

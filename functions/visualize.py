@@ -6,6 +6,7 @@ import pandas as pd
 
 
 def filter_companies(keyStats, filterSet=False):
+    print ("Starting filtering...")
     keyStats.sort_values(by='avgRatio', ascending=False, inplace=True)
     if (filterSet):
         if("aboveAvgRatio" in filterSet.keys()): keyStats = keyStats[keyStats['avgRatio'] >= filterSet['aboveAvgRatio']]
@@ -13,7 +14,7 @@ def filter_companies(keyStats, filterSet=False):
         if("minPositivePeriod" in filterSet.keys()): keyStats = keyStats[keyStats['Turning point'] >= filterSet['minPositivePeriod']]
         if("ratioContr" in filterSet.keys()): keyStats = keyStats[keyStats['ratioContr'] >= filterSet['ratioContr']]
         if("latestGrowth" in filterSet.keys()): keyStats = keyStats[keyStats['latestGrowth'] >= filterSet['latestGrowth']]
-        print (f"Main companies filtered. {keyStats.shape[0]} outstanding companies.")
+        print (f"--> Main companies filtered. {keyStats.shape[0]} outstanding companies.")
 
     result = pd.DataFrame({'Symbol': keyStats.index.values})
     return (result) 
@@ -33,6 +34,7 @@ def plot_all(closes, EMA_df, OBV_df, filteredCompanies, tickers_df, limit=10):
         axs[0].plot(x_axis, EMA_df['Slow'][x], 'b')
         axs[0].plot(x_axis, closes[x], 'g')
         axs[0].set_ylim([0*maxlim, 1.25*maxlim])
+        axs[0].tick_params(axis='x', labelrotation = 45)
 
         axs[1].plot(x_axis, OBV_df[x], 'g')
 

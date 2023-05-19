@@ -15,7 +15,7 @@ def get_EMA_df(qema_period, sema_period, rawdata):
         df_dict['Slow'][x] = talib.EMA(real2double(rawdata[x].values), timeperiod=sema_period)
         df_dict['Ratio'][x] = (df_dict['Quick'][x] - df_dict['Slow'][x])/df_dict['Quick'][x]
     
-    print ("EMA Dataframe calculated.")
+    print ("--> EMA Dataframe calculated.")
 
     return(pd.concat([df_dict['Quick'], df_dict['Slow'], df_dict['Ratio']], axis=1, keys=['Quick', 'Slow', 'Ratio']))
 
@@ -55,7 +55,7 @@ def get_intersection_point(EMA_df, rawdata):
     intersection_points_df = pd.DataFrame([idx_intersection_dict, value_intersection_dict, value_now_dict, growth_dict],
         index = ["Turning point", "Turning value", "Value now", "Percent Growth"]).transpose()#.sort_values(by="Percent Growth", ascending=False)
     
-    print ("Intersection points found.")
+    print ("--> Intersection points found.")
     return (intersection_points_df)
 
 
@@ -78,7 +78,7 @@ def ratioWrapper(EMA_df, companies, keyStats):
         MinAbsRatio = round(EMA_df['Ratio'][company][-getFrom+2:].min(),5) * (getFrom > 0 ) 
         minAbs_list.append(MinAbsRatio)
 
-    print ("Absolute and Relative Mins calculated.")
+    print ("--> Absolute and Relative Mins calculated.")
     return (avgRatio_list, minAbs_list)
 
 def get_stocks_growing_now(rawdata, keyStats, recent_success_period):
