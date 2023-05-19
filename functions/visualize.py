@@ -33,7 +33,7 @@ def plot_all(closes, EMA_df, OBV_df, filteredCompanies, tickers_df, limit=10):
         axs[0].plot(x_axis, EMA_df['Quick'][x], 'r')
         axs[0].plot(x_axis, EMA_df['Slow'][x], 'b')
         axs[0].plot(x_axis, closes[x], 'g')
-        axs[0].set_ylim([0*maxlim, 1.25*maxlim])
+        axs[0].set_ylim([0.5*maxlim, 1.25*maxlim])
         axs[0].tick_params(axis='x', labelrotation = 45)
 
         axs[1].plot(x_axis, OBV_df[x], 'g')
