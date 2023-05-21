@@ -48,7 +48,7 @@ def get_intersection_point(EMA_df, rawdata):
         idx_intersection_dict[company] = turning_change_index
 
         #Get both values by the intersection and current, and associated growth
-        value_intersection_dict[company] = round(rawdata[company].iloc[-(turning_change_index+1)],2)
+        value_intersection_dict[company] = round(rawdata[company].iloc[-(turning_change_index)],2)
         value_now_dict[company] = round(rawdata[company].iloc[-1],2)
         growth_dict[company] = round((value_now_dict[company] - value_intersection_dict[company])/value_intersection_dict[company],5)
 
