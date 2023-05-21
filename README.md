@@ -31,3 +31,5 @@ Investigaremos las tasas de forex.
 ### De MKC (McCormick).
 
 Es necesario poner las gráficas centradas a 0, porque si no da la sensación de que son todas maravillosas.
+La manera de gestionar mi entrada en MKC fue penosa. Corriendo y de mala manera, queriendo resolver la supuesta (mala) rentabilidad de LLY. Resultado: perdí en LLY, estoy perdiendo en MKC y una semana más tarde, LLY está subiendo a toda pastilla por encima de mi objetivo. No vender a lo tonto.
+
