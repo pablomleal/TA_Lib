@@ -29,8 +29,9 @@ def distribute_data(downloadedData):
     rawdata = downloadedData['Close']
     spreads = (downloadedData['High'] - downloadedData['Low'])/(downloadedData['Close'])
     volumes = downloadedData['Volume']
-
-    return (rawdata, spreads, volumes)
+    highs = downloadedData['High']
+    lows =  downloadedData['Low']
+    return (rawdata, spreads, volumes, highs, lows)
 
 def save_data(rawdata, spreads, volumes):
     rawdata.to_csv('./data/close.csv')
