@@ -7,7 +7,7 @@ import pandas as pd
 
 def filter_companies(keyStats, filterSet=False):
     print ("Starting filtering...")
-    keyStats.sort_values(by='lastMAR', ascending=False, inplace=True)
+    keyStats.sort_values(by='LVTH_ratio', ascending=False, inplace=True)
     if (filterSet):
         if("aboveAvgRatio" in filterSet.keys()): keyStats = keyStats[keyStats['avgRatio'] >= filterSet['aboveAvgRatio']]
         if("aboveMinAbs" in filterSet.keys()): keyStats = keyStats[keyStats['MinAbsRatio'] >= filterSet['aboveMinAbs']]
