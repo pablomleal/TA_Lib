@@ -7,7 +7,7 @@ import pandas as pd
 
 def filter_companies(keyStats, filterSet=False):
     print ("Starting filtering...")
-    keyStats.sort_values(by='avgRatio', ascending=False, inplace=True)
+    keyStats.sort_values(by='lastMAR', ascending=False, inplace=True)
     if (filterSet):
         if("aboveAvgRatio" in filterSet.keys()): keyStats = keyStats[keyStats['avgRatio'] >= filterSet['aboveAvgRatio']]
         if("aboveMinAbs" in filterSet.keys()): keyStats = keyStats[keyStats['MinAbsRatio'] >= filterSet['aboveMinAbs']]
@@ -49,7 +49,7 @@ def plot_all(closes, spreads, volumes, EMA_df, OBV_df, filteredCompanies, ticker
         axs[0].plot(x_axis, closes[x], 'g')
         axs[0].set_ylim([0.5*maxlim, 1.25*maxlim])
 
-        #Plotting the day-to-day profit
+        #Plotting the day-to-day spreads
         maxlim_profit = (spreads[x]).max()
         axs0_sub = axs[0].twinx()
         axs0_sub.plot(x_axis, spreads[x], 'b')
@@ -60,11 +60,12 @@ def plot_all(closes, spreads, volumes, EMA_df, OBV_df, filteredCompanies, ticker
 
         #Plotting the On-Balance Volume
         axs[1].plot(x_axis, OBV_df[x], 'g')
+
+        #Plotting the Volume itself
         axs1_sub = axs[1].twinx()
         axs1_sub.bar(x_axis, volumes[x])
-        #Plotting the Volume itself
-        print (f"Max spread of {x} is {spreads[x].max()}")
-
+        
+        
         axs[1].tick_params(axis='x', labelrotation = 45)
         #axs[0].text(0, 0.6*maxlim, t, ha="left", fontsize=10, bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
 
