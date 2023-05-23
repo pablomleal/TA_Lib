@@ -31,7 +31,7 @@ def get_chart_labels(company, keyStats):
 
 
 
-def plot_all(closes, EMA_df, OBV_df, filteredCompanies, tickers_df, keyStats, limit=10):
+def plot_all(closes, spreads, volumes, EMA_df, OBV_df, filteredCompanies, tickers_df, keyStats, limit=10):
     print (f"Displaying {min(limit, filteredCompanies.shape[0])} first companies")
 
     x_axis = closes.index
@@ -41,17 +41,32 @@ def plot_all(closes, EMA_df, OBV_df, filteredCompanies, tickers_df, keyStats, li
         #print(f"Company {x}")
         fig, axs = (plt.subplots(2, sharex=True))
 
+        #Plotting price and EMA charts
         maxlim = max(closes[x])
         axs[0].set_title(tickers_df.loc[x]['Name'] + " (" + x +")")
         axs[0].plot(x_axis, EMA_df['Quick'][x], 'r')
         axs[0].plot(x_axis, EMA_df['Slow'][x], 'b')
         axs[0].plot(x_axis, closes[x], 'g')
         axs[0].set_ylim([0.5*maxlim, 1.25*maxlim])
+
+        #Plotting the day-to-day profit
+        maxlim_profit = (spreads[x]).max()
+        axs0_sub = axs[0].twinx()
+        axs0_sub.plot(x_axis, spreads[x], 'b')
+        axs0_sub.set_ylim([0, 3*maxlim_profit])
+
+
         axs[0].tick_params(axis='x', labelrotation = 45)
 
+        #Plotting the On-Balance Volume
         axs[1].plot(x_axis, OBV_df[x], 'g')
+        axs1_sub = axs[1].twinx()
+        axs1_sub.bar(x_axis, volumes[x])
+        #Plotting the Volume itself
+        print (f"Max spread of {x} is {spreads[x].max()}")
+
         axs[1].tick_params(axis='x', labelrotation = 45)
-        axs[0].text(0, 0.6*maxlim, t, ha="left", fontsize=10, bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
+        #axs[0].text(0, 0.6*maxlim, t, ha="left", fontsize=10, bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
 
 
 
