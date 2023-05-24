@@ -33,10 +33,12 @@ def distribute_data(downloadedData):
     lows =  downloadedData['Low']
     return (rawdata, spreads, volumes, highs, lows)
 
-def save_data(rawdata, spreads, volumes):
+def save_data(rawdata, spreads, volumes, highs, lows):
     rawdata.to_csv('./data/close.csv')
     spreads.to_csv('./data/spreads.csv')
     volumes.to_csv('./data/volumes.csv')
+    highs.to_csv('./data/highs.csv')
+    lows.to_csv('./data/lows.csv')
 
 def from_CSV(daysSince, numberOfStocks):
     
@@ -58,4 +60,6 @@ def get_from_CSV():
         rawdata = (pd.read_csv('data/close.csv')).set_index('Date')
         spreads = (pd.read_csv('data/spreads.csv')).set_index('Date')
         volumes = (pd.read_csv('data/volumes.csv')).set_index('Date')
-        return (rawdata, spreads, volumes)
+        highs = (pd.read_csv('data/highs.csv')).set_index('Date')
+        lows = (pd.read_csv('data/lows.csv')).set_index('Date')
+        return (rawdata, spreads, volumes, highs, lows)
