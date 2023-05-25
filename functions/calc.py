@@ -6,6 +6,8 @@ import numpy as np
 import pandas as pd
 
 
+
+
 def get_EMA_df(qema_period, sema_period, rawdata):
     '''Builds a multiindex dataframe composed of two sub-dfs: quick and slow EMA'''
     df_dict = dict((label, pd.DataFrame()) for label in ['Quick', 'Slow', 'Ratio'])

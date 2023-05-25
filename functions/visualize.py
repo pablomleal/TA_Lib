@@ -7,7 +7,15 @@ import pandas as pd
 
 def filter_companies(keyStats, filterSet=False):
     print ("Starting filtering...")
-    keyStats.sort_values(by='LVTH_ratio', ascending=False, inplace=True)
+    
+    print("Removing stocks with lagging qEMA...")
+
+    keyStats = keyStats[keyStats['MACD_prelast'] > 0]
+    keyStats = keyStats[keyStats['MACD_increasing'] == True] 
+    #keyStats['abs_MACD'] = keyStats['MACD_last'].abs()
+    #keyStats.sort_values(by='LVTH_ratio', ascending=False, inplace=True)
+    keyStats.sort_values(by='MACD_prelast', inplace=True)
+
     if (filterSet):
         if("aboveAvgRatio" in filterSet.keys()): keyStats = keyStats[keyStats['avgRatio'] >= filterSet['aboveAvgRatio']]
         if("aboveMinAbs" in filterSet.keys()): keyStats = keyStats[keyStats['MinAbsRatio'] >= filterSet['aboveMinAbs']]
@@ -31,7 +39,7 @@ def get_chart_labels(company, keyStats):
 
 
 
-def plot_all(closes, spreads, volumes, EMA_df, OBV_df, filteredCompanies, tickers_df, keyStats, limit=10):
+def plot_all(closes, spreads, volumes, EMA_df, OBV_df, macd_df, filteredCompanies, tickers_df, keyStats, limit=10):
     print (f"Displaying {min(limit, filteredCompanies.shape[0])} first companies")
 
     x_axis = closes.index
@@ -39,7 +47,7 @@ def plot_all(closes, spreads, volumes, EMA_df, OBV_df, filteredCompanies, ticker
     for x in (filteredCompanies[0:limit]['Symbol']):
         t = get_chart_labels(x, keyStats)
         #print(f"Company {x}")
-        fig, axs = (plt.subplots(2, sharex=True))
+        fig, axs = (plt.subplots(3, sharex=True))
 
         #Plotting price and EMA charts
         maxlim = max(closes[x])
@@ -69,7 +77,9 @@ def plot_all(closes, spreads, volumes, EMA_df, OBV_df, filteredCompanies, ticker
         axs[1].tick_params(axis='x', labelrotation = 45)
         #axs[0].text(0, 0.6*maxlim, t, ha="left", fontsize=10, bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
 
-
+        axs[2].plot(x_axis, macd_df[x][0], 'r')
+        axs[2].plot(x_axis, macd_df[x][1], 'b')
+        axs[2].bar(x_axis, macd_df[x][2])
 
 
 """ def new_viz():
